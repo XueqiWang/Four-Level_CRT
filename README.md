@@ -9,6 +9,7 @@ I. List of Supporting Files: These supporting files are sourced in the main file
 4. LogitBinBCV.R = function to calculate the bias-corrected sandwich variances for logistic-binomial GEE analyses with the independence working correlation model.
 
 II. List of Main Files: These main files are used to reproduce the results in the submitted manuscript and supporting information.
+
 5. binScenarios_Analytical.R = reproduce predicted power results in all of the tables and figures for power;
 6. binScenarios_MAEE_00.R = reproduce simulation results of GEE/MAEE analyses using the extended nested exchangeable working correlation structure, under balanced four-level CRTs (used in Tables 2-3, Figures 2-3, Web Table 1, and Web Figures 1-8);
 7. binScenarios_MAEE_25.R = reproduce simulation results of GEE/MAEE analyses using the extended nested exchangeable working correlation structure, under unbalanced four-level CRTs with CV = 0.25 (used in Figures 2-3, Web Tables 4-5, and Web Figures 1-2);
@@ -20,6 +21,7 @@ II. List of Main Files: These main files are used to reproduce the results in th
 13. Application.R = reproduce results of applications in Figure 4-5, Web Figures 9-12, and Web Tables 20-21.
 
 III. Folder
+
 14. binResults = folder to save power/size data (from the raw data through binScenarios_Analytical.R and binRES.R) with an subfolder “binRData,” which contains 30 empty sub-subfolders to save raw data from simulation programs 6-11.
 
 IV. Software
