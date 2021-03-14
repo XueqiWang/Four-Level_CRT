@@ -1,26 +1,24 @@
 ##########################################################################
 # Simulate correlated binary outcomes in an unbalanced four-level CRT
 
-# May 2020
-
 # Ref: Qaqish, B. F. (2003). A family of multivariate binary distributions 
 # for simulating correlated binary variables. Biometrika 90, 455-463.
 
 # INPUT
 # n: Number of clusters
 # m: Number of divisions per cluster
-# l: Number of subject per division
-# kv: Vector of numbers of evaluations per subject (length n*m*l)
+# k: Number of participants per division
+# lv: Vector of numbers of evaluations per participant (length n*m*k)
 # beta: Vector of means=c(mu_0, mu_1)
 #       mu_0=population mean of the control arm
 #       mu_1=population mean of the intervention arm
 # alpha: Vector of correlations 
-#        alpha_0=within-subject correlation
+#        alpha_0=within-participant correlation
 #        alpha_1=within-division correlation
 #        alpha_2=inter-division correlation
 ##########################################################################
 
-binGEN_var<-function(n,m,l,kv,beta,alpha){
+binGEN_var<-function(n,m,k,lv,beta,alpha){
   
   ########################################################
   # Create correlation matrix.
@@ -32,14 +30,14 @@ binGEN_var<-function(n,m,l,kv,beta,alpha){
     return(cbind(first,last))
   }
   
-  enxch<-function(alpha,m,l,cv){
+  enxch<-function(alpha,m,k,cv){
     rho<-alpha[1]
     nu<-alpha[2]
     lambda<-alpha[3]
     locr<-BEGINEND(cv)
     em<-matrix(lambda,nrow=sum(cv),ncol=sum(cv))
     for (i in 1:m){
-      em[locr[((i-1)*l+1),1]:locr[(i*l),2],locr[((i-1)*l+1),1]:locr[(i*l),2]]<-nu
+      em[locr[((i-1)*k+1),1]:locr[(i*k),2],locr[((i-1)*k+1),1]:locr[(i*k),2]]<-nu
     }
     for (i in 1:length(cv)){
       em[locr[i,1]:locr[i,2],locr[i,1]:locr[i,2]]<-rho
@@ -131,8 +129,8 @@ binGEN_var<-function(n,m,l,kv,beta,alpha){
   # Simulate correlated binary outcomes
   y<-NULL
   for(i in 1:n){
-    cv<-kv[((i-1)*m*l+1):(i*m*l)]
-    r<-enxch(alpha,m,l,cv)
+    cv<-lv[((i-1)*m*k+1):(i*m*k)]
+    r<-enxch(alpha,m,k,cv)
     if(i<=n/2){
       u_c<-beta[1]}
     else{

@@ -17,8 +17,6 @@
 # (5) BC3: Bias-corrected sandwich estimator that extends Fay and Graubard, 2001
 # (6) BC4: Bias-corrected sandwich estimator that extends Morel, Bokossa, and Neerchal, 2003
 
-# May 2020
-
 # INPUT
 # y: The binary outcome variable
 # X: Marginal mean covariates (design matrix including intercept)
@@ -550,10 +548,10 @@ binMAEE=function(y, X, id, n, Z, maxiter, epsilon,
     # BC4 or Variance estimator that extends Morel, Bokossa, and Neerchal (2003);
     varMBN=matrix(0,p+q,p+q)
     varMBN[1:p,1:p]=(sum(n)-1)*length(n)/((sum(n)-p)*(length(n)-1))*robust[1:p,1:p]+
-      (min(0.5, p/(length(n)-p))*max(1,sum(diag(inustar[1:p,1:p]%*%UUtran[1:p,1:p]))/p))*inustartr[1:p,1:p]
+      (min(0.5, p/(length(n)-p))*max(1,sum(diag(inustar[1:p,1:p]%*%((sum(n)-1)*length(n)/((sum(n)-p)*(length(n)-1))*UUtran[1:p,1:p])))/p))*inustartr[1:p,1:p]
     f_alpha=sum(sapply(n, function(x) choose(x,2)))
     varMBN[(p+1):(p+q),(p+1):(p+q)]=(f_alpha-1)*length(n)/((f_alpha-q)*(length(n)-1))*robust[(p+1):(p+q),(p+1):(p+q)]+
-      (min(0.5, q/(length(n)-q))*max(1,sum(diag(inustar[(p+1):(p+q),(p+1):(p+q)]%*%UUtran[(p+1):(p+q),(p+1):(p+q)]))/q))*inustartr[(p+1):(p+q),(p+1):(p+q)]
+      (min(0.5, q/(length(n)-q))*max(1,sum(diag(inustar[(p+1):(p+q),(p+1):(p+q)]%*%((f_alpha-1)*length(n)/((f_alpha-q)*(length(n)-1))*UUtran[(p+1):(p+q),(p+1):(p+q)])))/q))*inustartr[(p+1):(p+q),(p+1):(p+q)]
     
     naive=inustar[1:p,1:p]
     

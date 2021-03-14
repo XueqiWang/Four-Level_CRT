@@ -1,26 +1,24 @@
 ##########################################################################
 # Simulate correlated binary outcomes in a balanced four-level CRT
 
-# May 2020
-
 # Ref: Qaqish, B. F. (2003). A family of multivariate binary distributions 
 # for simulating correlated binary variables. Biometrika 90, 455-463.
 
 # INPUT
 # n: Number of clusters
 # m: Number of divisions per cluster
-# l: Number of subject per division
-# k: Number of evaluations per subject
+# k: Number of participants per division
+# l: Number of evaluations per participant
 # beta: Vector of means=c(mu_0, mu_1)
 #       mu_0=population mean of the control arm
 #       mu_1=population mean of the intervention arm
 # alpha: Vector of correlations 
-#        alpha_0=within-subject correlation
+#        alpha_0=within-participant correlation
 #        alpha_1=within-division correlation
 #        alpha_2=inter-division correlation
 ##########################################################################
 
-binGEN<-function(n,m,l,k,beta,alpha){
+binGEN<-function(n,m,k,l,beta,alpha){
   
   ########################################################
   # Create extended nested exchangeable correlation matrix.
@@ -30,10 +28,10 @@ binGEN<-function(n,m,l,k,beta,alpha){
     rho<-alpha[1]
     nu<-alpha[2]
     lambda<-alpha[3]
-    em1<-(1-rho)*diag(m*l*k)
-    em2<-(rho-nu)*kronecker(diag(m*l),matrix(1,k,k))
-    em3<-(nu-lambda)*kronecker(diag(m),matrix(1,l*k,l*k))
-    em4<-lambda*matrix(1,m*l*k,m*l*k)
+    em1<-(1-rho)*diag(m*k*l)
+    em2<-(rho-nu)*kronecker(diag(m*k),matrix(1,l,l))
+    em3<-(nu-lambda)*kronecker(diag(m),matrix(1,k*l,k*l))
+    em4<-lambda*matrix(1,m*k*l,m*k*l)
     return(em1+em2+em3+em4)
   }
   
@@ -122,7 +120,7 @@ binGEN<-function(n,m,l,k,beta,alpha){
   r<-enxch(alpha)
   for(i in 1:2){
     u_c<-beta[i]
-    u<-rep(u_c,m*l*k)
+    u<-rep(u_c,m*k*l)
     v<-cor2var(r,u)                   # v <- cov matrix
     oor<-chkbinc(r,u)                 # corr out of range?
     if(oor){

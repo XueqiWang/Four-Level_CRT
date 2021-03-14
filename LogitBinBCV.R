@@ -155,7 +155,7 @@ LogitBinBCV=function(y,X,beta,id){
   
   # BC4 or Variance estimator due to Morel, Bokossa, and Neerchal (2003);
   varMBN=(sum(n)-1)*length(n)/((sum(n)-p)*(length(n)-1))*robust+
-    (min(0.5, p/(length(n)-p))*max(1,sum(diag(naive%*%UUtran))/p))*t(naive)
+    (min(0.5, p/(length(n)-p))*max(1,sum(diag(naive%*%((sum(n)-1)*length(n)/((sum(n)-p)*(length(n)-1))*UUtran)))/p))*t(naive)
   
   #############################################
   # Output
