@@ -27,7 +27,7 @@ III. List of Main Files: These main files are used to reproduce the results in t
 
 IV. Folder
 
-15. binResults = folder to save power/size data (from the raw data through binScenarios_Analytical.R and binRES.R) with an subfolder “binRData,” which contains 30 empty sub-subfolders to save raw data from simulation programs 7-12.
+15. binResults = folder to save power/size data (from the raw data through binScenarios_Analytical.R and binRES.R) with an subfolder “binRData,” which contains 30 empty sub-subfolders ("1row" to "30row") to save raw data from simulation programs 7-12.
 
 V. Software
 
@@ -37,4 +37,4 @@ VI. R commands for the installation of R packages
 
 install.packages(c("MASS", "gee", "openxlsx", "ggplot2", "directlabels", "cowplot"))
 
-NOTES: Make sure the current working directory is the current folder before running each program.
+NOTES: Make sure the current working directory is the current folder before running each program; the folders mentioned in #15 should be created before running the programs.
